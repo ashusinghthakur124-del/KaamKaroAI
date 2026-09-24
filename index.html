@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KaamKaro AI - Free AI Tools</title>
+<link rel="icon" href="favicon.svg?v=5" type="image/svg+xml">
+<link rel="shortcut icon" href="favicon.svg?v=5" type="image/svg+xml">
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f6f8fc;
+    color:#111827;
+}
+
+/* NAVBAR */
+
+nav{
+    background:white;
+    height:72px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+.nav-home{
+    text-decoration:none;
+    color:#174ea6;
+    font-weight:bold;
+}
+
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:80px 20px 65px;
+    background:linear-gradient(180deg,#eef4ff,#f6f8fc);
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:18px;
+    color:#111827;
+}
+
+.hero h1 span{
+    color:#174ea6;
+}
+
+.hero p{
+    max-width:650px;
+    margin:auto;
+    font-size:19px;
+    line-height:1.6;
+    color:#667085;
+}
+
+.hero-btn{
+    display:inline-block;
+    margin-top:28px;
+    padding:14px 28px;
+    background:#174ea6;
+    color:white;
+    text-decoration:none;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.hero-btn:hover{
+    background:#123d82;
+}
+
+
+/* TOOLS */
+
+.tools-section{
+    max-width:1100px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+.section-title{
+    text-align:center;
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.section-text{
+    text-align:center;
+    color:#667085;
+    margin-bottom:35px;
+}
+
+.tools{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.card{
+    background:white;
+    padding:32px 25px;
+    text-align:center;
+    border-radius:18px;
+    box-shadow:0 6px 25px rgba(0,0,0,0.07);
+    transition:0.25s;
+    border:1px solid #edf0f5;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 12px 30px rgba(0,0,0,0.11);
+}
+
+.icon{
+    width:70px;
+    height:70px;
+    margin:0 auto 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:18px;
+    background:#eef4ff;
+    font-size:35px;
+}
+
+.card h2{
+    margin-bottom:12px;
+    font-size:22px;
+}
+
+.card p{
+    color:#667085;
+    line-height:1.6;
+    min-height:52px;
+    margin-bottom:23px;
+}
+
+.btn{
+    display:inline-block;
+    padding:11px 22px;
+    background:#174ea6;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#123d82;
+}
+
+
+/* WHY SECTION */
+
+.why{
+    background:white;
+    padding:55px 20px;
+    text-align:center;
+}
+
+.why h2{
+    font-size:30px;
+    margin-bottom:30px;
+}
+
+.features{
+    max-width:950px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.feature{
+    padding:20px;
+}
+
+.feature-icon{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.feature h3{
+    margin-bottom:8px;
+}
+
+.feature p{
+    color:#667085;
+    line-height:1.5;
+}
+
+
+/* FOOTER */
+
+footer{
+    background:#101828;
+    color:white;
+    text-align:center;
+    padding:28px 20px;
+}
+
+footer p{
+    color:#cbd5e1;
+    margin-top:8px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .tools{
+        grid-template-columns:1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .hero p{
+        font-size:17px;
+    }
+
+}
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    nav{
+        height:auto;
+        min-height:64px;
+        padding:15px 5%;
+        gap:15px;
+    }
+
+    .logo{
+        font-size:21px;
+    }
+
+    nav a{
+        font-size:14px;
+    }
+
+    .hero{
+        padding:55px 20px 45px;
+    }
+
+    .hero h1{
+        font-size:38px;
+        line-height:1.15;
+    }
+
+    .hero p{
+        font-size:16px;
+        line-height:1.6;
+    }
+
+    .tools-section{
+        padding:40px 18px;
+    }
+
+    .tools-section h2{
+        font-size:28px;
+    }
+
+    .tools{
+        grid-template-columns:1fr;
+        gap:18px;
+    }
+
+    .tool-card{
+        width:100%;
+        padding:22px;
+    }
+
+    .tool-card h3{
+        font-size:19px;
+    }
+
+    .tool-card p{
+        font-size:14px;
+        line-height:1.6;
+    }
+
+    .tool-card a,
+    .tool-card button{
+        max-width:100%;
+    }
+
+    .why-section{
+        padding:40px 18px;
+    }
+
+    .why-section h2{
+        font-size:28px;
+    }
+
+    footer{
+        padding:25px 18px;
+        font-size:14px;
+    }
+
+}
+
+
+/* SMALL PHONES */
+
+@media (max-width: 480px){
+
+    .logo{
+        font-size:19px;
+    }
+
+    nav a{
+        font-size:13px;
+    }
+
+    .hero{
+        padding:45px 16px 35px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .tools-section{
+        padding:35px 14px;
+    }
+
+    .tool-card{
+        padding:20px;
+        border-radius:15px;
+    }
+
+}
+/* =========================
+   PROFESSIONAL FOOTER
+========================= */
+
+footer{
+    background:#0f172a;
+    color:#ffffff;
+    padding:35px 6% 20px;
+    margin-top:50px;
+}
+
+.footer-content{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+}
+
+.footer-brand strong{
+    font-size:22px;
+}
+
+.footer-brand p{
+    margin:8px 0 0;
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+.footer-links{
+    display:flex;
+    gap:25px;
+}
+
+.footer-links a{
+    color:#ffffff;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.footer-links a:hover{
+    text-decoration:underline;
+}
+
+.footer-bottom{
+    max-width:1100px;
+    margin:25px auto 0;
+    padding-top:18px;
+    border-top:1px solid #334155;
+    text-align:center;
+    color:#94a3b8;
+    font-size:13px;
+}
+
+@media (max-width:600px){
+    .footer-content{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .footer-links{
+        gap:18px;
+    }
+}
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+}
+
+.nav-links a{
+    color:#174ea6;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    color:#123b7a;
+    text-decoration:none;
+}
+.footer-contact{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.footer-contact a{
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+    transition:0.2s;
+}
+
+.footer-contact a:hover{
+    text-decoration:underline;
+    transform:translateX(2px);
+}
+/* Global hover effect */
+a,
+button,
+.tool-card,
+.feature {
+    transition: all 0.25s ease;
+}
+
+/* Links and buttons */
+a:hover,
+button:hover {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.22));
+}
+
+/* Tool cards */
+.tool-card:hover,
+.feature:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+/* Global Hover Effect */
+a,
+button,
+.tool-card,
+.feature {
+    transition: all 0.25s ease;
+}
+
+/* Links and Buttons */
+a:hover,
+button:hover {
+    transform: translateY(-3px);
+    filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.22));
+}
+
+/* Tool Cards and Features */
+.tool-card:hover,
+.feature:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+</style>
+
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const loginLink = document.getElementById("loginLink");
+    const loggedIn = localStorage.getItem("kaamkaroLoggedIn");
+    const savedUser = localStorage.getItem("kaamkaroUser");
+
+    if (loggedIn === "true" && savedUser) {
+        const user = JSON.parse(savedUser);
+
+        loginLink.textContent = user.name || "Account";
+        loginLink.href = "#";
+        loginLink.onclick = function (event) {
+            event.preventDefault();
+
+            const logout = confirm("Do you want to logout?");
+
+            if (logout) {
+                localStorage.removeItem("kaamkaroLoggedIn");
+                window.location.reload();
+            }
+        };
+    }
+});
+</script>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+   <div class="nav-links">
+    <a href="home.html" class="nav-home">Home</a>
+    <a href="#tools">Tools</a>
+    <a href="login.html" id="loginLink">Login</a>
+</div>
+
+</nav>
+
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        KaamKaro <span>AI</span>
+    </h1>
+
+    <p>
+        Apna kaam batao, ready result pao.
+        Simple, fast aur useful AI tools — sab ek jagah.
+    </p>
+
+    <a href="#tools" class="hero-btn">
+        Explore Tools
+    </a>
+
+</section>
+
+
+
+<!-- TOOLS -->
+
+<section class="tools-section" id="tools">
+
+    <h2 class="section-title">
+        Our Free Tools
+    </h2>
+
+    <p class="section-text">
+        Apne daily kaam ko simple aur fast banao.
+    </p>
+
+
+    <div class="tools">
+
+
+        <!-- RESUME -->
+
+        <div class="card">
+
+            <div class="icon">
+                📄
+            </div>
+
+            <h2>
+                Resume Builder
+            </h2>
+
+            <p>
+                Professional resume banao aur PDF mein save karo.
+            </p>
+
+            <a href="kaamkaro ai.html" class="btn">
+                Open Tool
+            </a>
+
+        </div>
+
+
+
+        <!-- EMAIL -->
+
+        <div class="card">
+
+            <div class="icon">
+                ✉️
+            </div>
+
+            <h2>
+                Professional Email
+            </h2>
+
+            <p>
+                Job, leave aur business ke professional emails easily banao.
+            </p>
+
+            <a href="email.html" class="btn">
+                Open Tool
+            </a>
+
+        </div>
+
+
+
+        <!-- INVOICE -->
+
+        <div class="card">
+
+            <div class="icon">
+                🧾
+            </div>
+
+            <h2>
+                Invoice Generator
+            </h2>
+
+            <p>
+                Simple professional invoice generate karo aur PDF save karo.
+            </p>
+
+            <a href="invoice.html" class="btn">
+                Open Tool
+            </a>
+
+        </div>
+        <!-- QR CODE -->
+
+<div class="card">
+
+    <div class="icon">
+        📱
+    </div>
+
+    <h2>
+        QR Code Generator
+    </h2>
+
+    <p>
+        Text ya website link ka QR code banao aur download karo.
+    </p>
+
+    <a href="qr.html" class="btn">
+        Open Tool
+    </a>
+    
+
+</div>
+<!-- IMAGE TO PDF -->
+
+<div class="card">
+
+    <div class="icon">
+        🖼️
+    </div>
+
+    <h2>
+        Image to PDF
+    </h2>
+
+    <p>
+        Images ko ek professional PDF file mein convert karo.
+    </p>
+
+    <a href="image-pdf.html" class="btn">
+        Open Tool
+    </a>
+
+</div>
+<!-- JOB APPLICATION GENERATOR -->
+
+<div class="card">
+
+    <div class="icon">
+        💼
+    </div>
+
+    <h2>
+        Job Application Generator
+    </h2>
+
+    <p>
+        Professional job application letter seconds mein banao.
+    </p>
+
+    <a href="job-application.html" class="btn">
+        Open Tool
+    </a>
+
+</div>
+<!-- IMAGE COMPRESSOR -->
+
+<div class="card">
+
+    <div class="icon">
+        🗜️
+    </div>
+
+    <h2>
+        Image Compressor
+    </h2>
+
+    <p>
+        Image ka size kam karo aur kitna % smaller hua turant dekho.
+    </p>
+
+    <a href="image-compressor.html" class="btn">
+        Open Tool
+    </a>
+
+</div>
+<!-- IMAGE RESIZER -->
+
+<div class="card">
+
+    <div class="icon">
+        📐
+    </div>
+
+    <h2>
+        Image Resizer
+    </h2>
+
+    <p>
+        Image ki width aur height change karo aur resized image download karo.
+    </p>
+
+    <a href="image-resizer.html" class="btn">
+        Open Tool
+    </a>
+
+</div>
+<!-- PDF MERGER -->
+
+<div class="card">
+
+    <div class="icon">
+        📑
+    </div>
+
+    <h2>
+        PDF Merger
+    </h2>
+
+    <p>
+        Multiple PDF files ko ek single PDF mein merge karo.
+    </p>
+
+    <a href="pdf-merger.html" class="btn">
+        Open Tool
+    </a>
+
+</div>
+<!-- PDF SPLITTER -->
+
+<div class="card">
+
+    <div class="icon">
+        ✂️
+    </div>
+
+    <h2>
+        PDF Splitter
+    </h2>
+
+    <p>
+        PDF ke selected pages ko ek alag PDF file mein nikalo.
+    </p>
+
+    <a href="pdf-splitter.html" class="btn">
+        Open Tool
+    </a>
+
+</div>
+<!-- PDF COMPRESSOR -->
+<div class="card">
+    <div class="icon">🗜️</div>
+    <h2>PDF Compressor</h2>
+    <p>PDF ka size kam karo aur compressed PDF download karo.</p>
+    <a href="pdf-compressor.html" class="btn">Open Tool</a>
+</div>
+<!-- PDF TO JPG -->
+<div class="card">
+    <div class="icon">🖼️</div>
+    <h2>PDF to JPG</h2>
+    <p>PDF pages ko JPG images mein convert karo aur download karo.</p>
+    <a href="pdf-to-jpg.html" class="btn">Open Tool</a>
+</div>
+<div style="
+    background:#ffffff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.06);
+    border:1px solid #e8edf5;
+">
+
+    <div style="font-size:42px;margin-bottom:15px;">
+        📊
+    </div>
+
+    <h3 style="
+        margin:0 0 10px;
+        font-size:20px;
+        color:#111827;
+    ">
+        ATS Resume Checker
+    </h3>
+
+    <p style="
+        margin:0 0 20px;
+        color:#667085;
+        line-height:1.6;
+    ">
+        Check your resume keywords and find what you should improve.
+    </p>
+
+    <a href="ats-resume-checker.html" style="
+        display:inline-block;
+        background:#174ea6;
+        color:#ffffff;
+        text-decoration:none;
+        padding:12px 18px;
+        border-radius:10px;
+        font-weight:bold;
+    ">
+        Open ATS Resume Checker
+    </a>
+
+</div>
+
+
+
+
+    </div>
+
+</section>
+
+
+
+<!-- WHY KAMKARO AI -->
+
+<section class="why">
+
+    <h2>
+        Why KaamKaro AI?
+    </h2>
+
+
+    <div class="features">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Fast
+            </h3>
+
+            <p>
+                Apna kaam quickly complete karo.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🆓
+            </div>
+
+            <h3>
+                Easy to Use
+            </h3>
+
+            <p>
+                Simple tools, bina complicated steps ke.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📱
+            </div>
+
+            <h3>
+                Mobile Friendly
+            </h3>
+
+            <p>
+                Phone aur laptop dono par use karo.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-content">
+
+       
+
+        <div class="footer-links">
+            <a href="home.html">Home</a>
+            <a href="#tools">Tools</a>
+        </div>
+        <footer>
+    <div class="footer-content">
+
+        <div class="footer-brand">
+            <strong>KaamKaro AI</strong>
+            <p>Apna kaam batao, ready result pao.</p>
+        </div>
+
+      
+
+        <div class="footer-contact">
+
+            <a href="mailto:kaamkaroai@gmail.com">
+                ✉️ Email · kaamkaroai@gmail.com
+            </a>
+
+            <a href="https://www.instagram.com/kaamkaroai/"
+               target="_blank"
+               rel="noopener noreferrer">
+                📸 Instagram · @kaamkaroai
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 KaamKaro AI. All rights reserved.
+    </div>
+</footer>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 KaamKaro AI. All rights reserved.
+    </div>
+
+</footer>
+
+
+</body>
+</html>
