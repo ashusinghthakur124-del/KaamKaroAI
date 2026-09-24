@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - KaamKaro AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef5ff, #ffffff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(23, 78, 166, 0.15);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #174ea6;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #174ea6;
+            box-shadow: 0 0 0 3px rgba(23, 78, 166, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            margin-top: 24px;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #174ea6;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #123b7a;
+        }
+
+        .forgot {
+            display: block;
+            text-align: right;
+            margin-top: 12px;
+            color: #174ea6;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .signup {
+            text-align: center;
+            margin-top: 25px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .signup a {
+            color: #174ea6;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #475569;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <div class="logo">KaamKaro AI</div>
+
+        <p class="subtitle">Login to your account</p>
+
+        <form onsubmit="loginUser(event)">
+
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <a href="forgot-password.html" class="forgot">
+            Forgot Password?
+        </a>
+
+        <div class="signup">
+            Don't have an account?
+            <a href="signup.html">
+                Sign Up
+            </a>
+        </div>
+
+        <a href="home.html" class="back-home">
+            ← Back to Home
+        </a>
+
+    </div>
+
+    <script>
+       
+function loginUser(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const savedUser = localStorage.getItem("kaamkaroUser");
+
+    if (!savedUser) {
+        alert("No account found. Please sign up first.");
+        return;
+    }
+
+    const user = JSON.parse(savedUser);
+
+    if (email === user.email && password === user.password) {
+        localStorage.setItem("kaamkaroLoggedIn", "true");
+
+        alert("Login successful!");
+
+        window.location.href = "home.html";
+    } else {
+        alert("Invalid email or password.");
+    }
+}
+
+    </script>
+
+</body>
+
+</html>

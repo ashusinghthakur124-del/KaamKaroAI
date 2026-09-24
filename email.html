@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>KaamKaro AI - Professional Email Generator</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+
+body {
+    background: #f7faff;
+    color: #0b1736;
+}
+
+
+/* NAVBAR */
+
+nav {
+    background: white;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e9f2;
+}
+
+
+.logo {
+    color: #1557d6;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+nav a {
+    color: #1557d6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* CONTAINER */
+
+.container {
+    max-width: 900px;
+    margin: 45px auto;
+    padding: 20px;
+}
+
+
+.heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+.heading h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+
+.heading p {
+    color: #667085;
+}
+
+
+/* BOX */
+
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    margin-bottom: 30px;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #d9dfeb;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+}
+
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+
+button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #1557d6;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+button:hover {
+    background: #0d46b5;
+}
+
+
+/* EMAIL OUTPUT */
+
+#emailOutput {
+    display: none;
+}
+
+
+.email-preview {
+
+    background: white;
+
+    border: 1px solid #d9dfeb;
+
+    border-radius: 12px;
+
+    padding: 30px;
+
+    line-height: 1.7;
+
+    white-space: pre-line;
+}
+
+
+.email-preview h2 {
+
+    margin-bottom: 20px;
+
+    color: #1557d6;
+}
+
+
+.copy-button {
+
+    margin-top: 20px;
+}
+
+
+.success {
+
+    display: none;
+
+    text-align: center;
+
+    margin-top: 10px;
+
+    color: #16803c;
+
+    font-weight: bold;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .heading h1 {
+        font-size: 30px;
+    }
+
+    .box {
+        padding: 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+    <a href="home.html" class="nav-btn">Home</a>
+    </a>
+
+</nav>
+
+
+
+<div class="container">
+
+
+    <div class="heading">
+
+        <h1>
+            Professional Email Generator
+        </h1>
+
+        <p>
+            Apna purpose batao aur professional email ready pao.
+        </p>
+
+    </div>
+
+
+
+    <!-- FORM -->
+
+    <div class="box">
+
+        <h2 style="margin-bottom:20px;">
+            Create Your Email
+        </h2>
+
+
+        <div class="form-group">
+
+            <label>
+                Recipient Name
+            </label>
+
+            <input
+                id="recipient"
+                type="text"
+                placeholder="e.g. Rahul Sir">
+
+        </div>
+
+
+
+        <div class="form-group">
+
+            <label>
+                Your Name
+            </label>
+
+            <input
+                id="sender"
+                type="text"
+                placeholder="e.g. Ashu">
+
+        </div>
+
+
+
+        <div class="form-group">
+
+            <label>
+                Email Purpose
+            </label>
+
+            <select id="purpose">
+
+                <option value="job">
+                    Job Application
+                </option>
+
+                <option value="leave">
+                    Leave Request
+                </option>
+
+                <option value="business">
+                    Business Inquiry
+                </option>
+
+                <option value="followup">
+                    Follow-up
+                </option>
+
+                <option value="general">
+                    General Professional Email
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="form-group">
+
+            <label>
+                Tone
+            </label>
+
+            <select id="tone">
+
+                <option value="professional">
+                    Professional
+                </option>
+
+                <option value="formal">
+                    Formal
+                </option>
+
+                <option value="friendly">
+                    Friendly
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="form-group">
+
+            <label>
+                Main Details
+            </label>
+
+            <textarea
+                id="details"
+                placeholder="Example: I am applying for the customer support position. I have completed 12th and I am a fresher.">
+            </textarea>
+
+        </div>
+
+
+
+        <button onclick="generateEmail()">
+
+            Generate Professional Email
+
+        </button>
+
+    </div>
+
+
+
+    <!-- OUTPUT -->
+
+    <div class="box" id="emailOutput">
+
+        <h2 style="margin-bottom:20px;">
+            Your Email
+        </h2>
+
+
+        <div
+            class="email-preview"
+            id="emailText">
+        </div>
+
+
+        <div class="copy-button">
+
+            <button onclick="copyEmail()">
+
+                📋 Copy Email
+
+            </button>
+
+        </div>
+
+
+        <div
+            class="success"
+            id="copyMessage">
+
+            Email copied successfully! ✓
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+function generateEmail() {
+
+
+    const recipient =
+        document.getElementById("recipient")
+        .value
+        .trim();
+
+
+    const sender =
+        document.getElementById("sender")
+        .value
+        .trim();
+
+
+    const purpose =
+        document.getElementById("purpose")
+        .value;
+
+
+    const tone =
+        document.getElementById("tone")
+        .value;
+
+
+    const details =
+        document.getElementById("details")
+        .value
+        .trim();
+
+
+    if (!recipient || !sender || !details) {
+
+        alert(
+            "Please enter Recipient Name, Your Name and Main Details."
+        );
+
+        return;
+
+    }
+
+
+
+    let subject = "";
+
+    let greeting = "";
+
+    let body = "";
+
+
+
+    /* GREETING */
+
+    if (tone === "formal") {
+
+        greeting =
+            "Dear " + recipient + ",";
+
+    }
+
+    else if (tone === "friendly") {
+
+        greeting =
+            "Hello " + recipient + ",";
+
+    }
+
+    else {
+
+        greeting =
+            "Dear " + recipient + ",";
+
+    }
+
+
+
+    /* SUBJECT + BODY */
+
+    if (purpose === "job") {
+
+        subject =
+            "Application for Job Opportunity";
+
+
+        body =
+            "I am writing to express my interest in the job opportunity at your organization.\n\n" +
+
+            details +
+
+            "\n\nI would appreciate the opportunity to discuss my application further. Please let me know if you require any additional information from my side.";
+
+    }
+
+
+    else if (purpose === "leave") {
+
+        subject =
+            "Leave Request";
+
+
+        body =
+            "I am writing to request leave from work.\n\n" +
+
+            details +
+
+            "\n\nI kindly request you to consider my leave request. I will ensure that any pending responsibilities are managed appropriately.";
+
+    }
+
+
+    else if (purpose === "business") {
+
+        subject =
+            "Business Inquiry";
+
+
+        body =
+            "I am reaching out regarding a potential business opportunity.\n\n" +
+
+            details +
+
+            "\n\nI would be happy to discuss this further and explore how we can work together.";
+
+    }
+
+
+    else if (purpose === "followup") {
+
+        subject =
+            "Follow-up Regarding Our Previous Discussion";
+
+
+        body =
+            "I am writing to follow up regarding our previous communication.\n\n" +
+
+            details +
+
+            "\n\nI would appreciate any update you can provide. Please let me know if you need anything further from my side.";
+
+    }
+
+
+    else {
+
+        subject =
+            "Professional Inquiry";
+
+
+        body =
+            details +
+
+            "\n\nPlease let me know if you require any additional information from my side.";
+
+    }
+
+
+
+    /* FINAL EMAIL */
+
+    const email =
+
+        "Subject: " + subject +
+
+        "\n\n" +
+
+        greeting +
+
+        "\n\n" +
+
+        body +
+
+        "\n\nBest regards,\n" +
+
+        sender;
+
+
+
+    document.getElementById("emailText")
+        .textContent = email;
+
+
+    document.getElementById("emailOutput")
+        .style.display = "block";
+
+
+    document.getElementById("copyMessage")
+        .style.display = "none";
+
+
+    document.getElementById("emailOutput")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+
+/* COPY */
+
+function copyEmail() {
+
+
+    const email =
+        document.getElementById("emailText")
+        .textContent;
+
+
+    navigator.clipboard.writeText(email)
+        .then(function() {
+
+            document.getElementById("copyMessage")
+                .style.display = "block";
+
+        })
+
+        .catch(function() {
+
+            alert(
+                "Copy failed. Please select and copy the email manually."
+            );
+
+        });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

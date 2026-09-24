@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QR Code Generator - KaamKaro AI</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#111827;
+}
+
+nav{
+    background:white;
+    height:72px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+.nav-home{
+    text-decoration:none;
+    color:#174ea6;
+    font-weight:bold;
+}
+
+.container{
+    max-width:700px;
+    margin:55px auto;
+    padding:20px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:36px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#667085;
+    margin-bottom:30px;
+}
+
+.box{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 6px 25px rgba(0,0,0,0.08);
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+textarea{
+    width:100%;
+    min-height:120px;
+    resize:vertical;
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    font-size:16px;
+    outline:none;
+}
+
+textarea:focus{
+    border-color:#174ea6;
+}
+
+button{
+    width:100%;
+    margin-top:18px;
+    padding:14px;
+    border:none;
+    border-radius:9px;
+    background:#174ea6;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#123d82;
+}
+
+.qr-area{
+    display:none;
+    margin-top:30px;
+    text-align:center;
+    padding-top:25px;
+    border-top:1px solid #e5e7eb;
+}
+
+#qrcode{
+    display:flex;
+    justify-content:center;
+    margin:20px 0;
+}
+
+.download-btn{
+    max-width:250px;
+    margin:auto;
+}
+
+.note{
+    text-align:center;
+    color:#667085;
+    font-size:14px;
+    margin-top:15px;
+}
+
+@media(max-width:600px){
+
+    .container{
+        margin:30px auto;
+    }
+
+    .title{
+        font-size:30px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+    <a href="home.html" class="nav-home">
+        Home
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+    <h1 class="title">
+        QR Code Generator
+    </h1>
+
+    <p class="subtitle">
+        Text, website link ya koi bhi information ka QR code banao.
+    </p>
+
+
+    <div class="box">
+
+        <label for="qrText">
+            Enter Text or URL
+        </label>
+
+        <textarea
+            id="qrText"
+            placeholder="Example: https://example.com">
+        </textarea>
+
+
+        <button onclick="generateQR()">
+            Generate QR Code
+        </button>
+
+
+        <div class="qr-area" id="qrArea">
+
+            <h2>
+                Your QR Code
+            </h2>
+
+            <div id="qrcode"></div>
+
+            <button
+                class="download-btn"
+                onclick="downloadQR()">
+                Download QR Code
+            </button>
+
+            <p class="note">
+                Scan this QR code using any phone camera.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- QR Code Library -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+
+<script>
+
+function generateQR(){
+
+    const text =
+        document.getElementById("qrText").value.trim();
+
+    if(text === ""){
+
+        alert("Please enter text or a URL.");
+
+        return;
+    }
+
+
+    const qrContainer =
+        document.getElementById("qrcode");
+
+    qrContainer.innerHTML = "";
+
+
+    new QRCode(qrContainer, {
+
+        text: text,
+
+        width: 220,
+
+        height: 220,
+
+        correctLevel: QRCode.CorrectLevel.H
+
+    });
+
+
+    document.getElementById("qrArea").style.display =
+        "block";
+
+}
+
+
+function downloadQR(){
+
+    const canvas =
+        document.querySelector("#qrcode canvas");
+
+    if(!canvas){
+
+        alert("Please generate a QR code first.");
+
+        return;
+    }
+
+
+    const link =
+        document.createElement("a");
+
+    link.download = "KaamKaro-AI-QR.png";
+
+    link.href =
+        canvas.toDataURL("image/png");
+
+    link.click();
+
+}
+
+</script>
+
+</body>
+</html>

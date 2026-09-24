@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF Merger - KaamKaro AI</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#172033;
+}
+
+.navbar{
+    background:white;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+.nav-btn{
+    text-decoration:none;
+    background:#174ea6;
+    color:white;
+    padding:10px 18px;
+    border-radius:8px;
+}
+
+.container{
+    max-width:800px;
+    margin:50px auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.08);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#667085;
+    margin-bottom:30px;
+}
+
+.upload{
+    display:block;
+    width:100%;
+    min-height:180px;
+    border:2px dashed #b8c4d6;
+    border-radius:16px;
+    padding:40px 20px;
+    text-align:center;
+    cursor:pointer;
+    background:#fafcff;
+}
+
+.upload:hover{
+    border-color:#174ea6;
+    background:#f3f7ff;
+}
+
+.upload-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.upload strong{
+    display:block;
+    font-size:18px;
+}
+
+.upload p{
+    color:#667085;
+    margin-top:10px;
+}
+
+input[type="file"]{
+    display:none;
+}
+
+.file-list{
+    margin-top:25px;
+}
+
+.file-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px;
+    margin-bottom:10px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+}
+
+.file-name{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    margin-right:15px;
+}
+
+.remove-btn{
+    width:auto;
+    margin:0;
+    padding:7px 12px;
+    background:#dc3545;
+    font-size:13px;
+}
+
+.remove-btn:hover{
+    background:#b02a37;
+}
+
+.merge-btn{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#174ea6;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.merge-btn:hover{
+    background:#123d82;
+}
+
+.merge-btn:disabled{
+    background:#9aa5b5;
+    cursor:not-allowed;
+}
+
+.status{
+    text-align:center;
+    margin-top:20px;
+    color:#16834b;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+    .card{
+        padding:22px;
+    }
+
+    .navbar{
+        padding:15px 5%;
+    }
+
+    .file-item{
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+    <a href="home.html" class="nav-btn">
+        Home
+    </a>
+
+</div>
+
+
+
+<div class="container">
+
+<div class="card">
+
+<h1>PDF Merger</h1>
+
+<p class="subtitle">
+Multiple PDF files ko ek single PDF mein merge karo.
+</p>
+
+
+<label class="upload" for="pdfInput">
+
+    <div class="upload-icon">
+        📄
+    </div>
+
+    <strong>
+        Click to select PDF files
+    </strong>
+
+    <p>
+        Multiple PDF files select kar sakte ho
+    </p>
+
+</label>
+
+
+<input
+    type="file"
+    id="pdfInput"
+    accept="application/pdf"
+    multiple
+>
+
+
+<div
+    class="file-list"
+    id="fileList"
+></div>
+
+
+<button
+    class="merge-btn"
+    id="mergeBtn"
+    onclick="mergePDFs()"
+    disabled
+>
+    Merge & Download PDF
+</button>
+
+
+<div
+    class="status"
+    id="status"
+></div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+let selectedFiles = [];
+
+const pdfInput =
+    document.getElementById("pdfInput");
+
+const fileList =
+    document.getElementById("fileList");
+
+const mergeBtn =
+    document.getElementById("mergeBtn");
+
+const status =
+    document.getElementById("status");
+
+
+pdfInput.addEventListener("change", function(){
+
+    const newFiles =
+        Array.from(pdfInput.files);
+
+    newFiles.forEach(function(file){
+
+        const alreadyAdded =
+            selectedFiles.some(function(existingFile){
+
+                return existingFile.name === file.name &&
+                       existingFile.size === file.size;
+
+            });
+
+        if(!alreadyAdded){
+
+            selectedFiles.push(file);
+
+        }
+
+    });
+
+    updateFileList();
+
+    pdfInput.value = "";
+
+});
+
+
+
+function updateFileList(){
+
+    fileList.innerHTML = "";
+
+    if(selectedFiles.length === 0){
+
+        mergeBtn.disabled = true;
+
+        return;
+
+    }
+
+
+    selectedFiles.forEach(function(file,index){
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "file-item";
+
+
+        const name =
+            document.createElement("div");
+
+        name.className =
+            "file-name";
+
+        name.textContent =
+            (index + 1) +
+            ". " +
+            file.name;
+
+
+        const remove =
+            document.createElement("button");
+
+        remove.className =
+            "remove-btn";
+
+        remove.textContent =
+            "Remove";
+
+
+        remove.onclick =
+            function(){
+
+                selectedFiles.splice(index,1);
+
+                updateFileList();
+
+            };
+
+
+        item.appendChild(name);
+
+        item.appendChild(remove);
+
+        fileList.appendChild(item);
+
+    });
+
+
+    mergeBtn.disabled =
+        selectedFiles.length < 2;
+
+}
+
+
+
+async function mergePDFs(){
+
+    if(selectedFiles.length < 2){
+
+        alert("Please select at least 2 PDF files.");
+
+        return;
+
+    }
+
+
+    try{
+
+        mergeBtn.disabled = true;
+
+        status.textContent =
+            "Merging PDFs... Please wait.";
+
+
+        const mergedPdf =
+            await PDFLib.PDFDocument.create();
+
+
+        for(
+            let i = 0;
+            i < selectedFiles.length;
+            i++
+        ){
+
+            const file =
+                selectedFiles[i];
+
+
+            const arrayBuffer =
+                await file.arrayBuffer();
+
+
+            const pdf =
+                await PDFLib.PDFDocument.load(
+                    arrayBuffer
+                );
+
+
+            const pages =
+                await mergedPdf.copyPages(
+                    pdf,
+                    pdf.getPageIndices()
+                );
+
+
+            pages.forEach(function(page){
+
+                mergedPdf.addPage(page);
+
+            });
+
+        }
+
+
+        const mergedBytes =
+            await mergedPdf.save();
+
+
+        const blob =
+            new Blob(
+                [mergedBytes],
+                {
+                    type:"application/pdf"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        const link =
+            document.createElement("a");
+
+
+        link.href =
+            url;
+
+        link.download =
+            "KaamKaro-AI-Merged-PDF.pdf";
+
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+
+        status.textContent =
+            "✅ PDFs merged successfully!";
+
+
+        mergeBtn.disabled = false;
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        status.textContent =
+            "❌ Could not merge the PDFs. Please try again.";
+
+        mergeBtn.disabled = false;
+
+    }
+
+}
+
+</script>
+
+
+</body>
+</html>

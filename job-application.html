@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Job Application Generator - KaamKaro AI</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#111827;
+}
+
+nav{
+    background:white;
+    height:72px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+.nav-home{
+    text-decoration:none;
+    color:#174ea6;
+    font-weight:bold;
+}
+
+.container{
+    max-width:850px;
+    margin:45px auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#667085;
+    margin-bottom:30px;
+}
+
+.box{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 6px 25px rgba(0,0,0,0.08);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.field{
+    margin-bottom:5px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#174ea6;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.full{
+    grid-column:1 / -1;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:none;
+    border-radius:9px;
+    background:#174ea6;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#123d82;
+}
+
+.result{
+    display:none;
+    margin-top:30px;
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 6px 25px rgba(0,0,0,0.08);
+}
+
+.result h2{
+    margin-bottom:20px;
+}
+
+#applicationText{
+    white-space:pre-wrap;
+    line-height:1.7;
+    color:#374151;
+    border:1px solid #e5e7eb;
+    padding:20px;
+    border-radius:10px;
+    background:#fafafa;
+}
+
+.copy-btn{
+    margin-top:18px;
+}
+
+@media(max-width:700px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    h1{
+        font-size:30px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+    <a href="home.html" class="nav-home">
+        Home
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>
+        Job Application Generator
+    </h1>
+
+    <p class="subtitle">
+        Professional job application letter easily banao.
+    </p>
+
+
+    <div class="box">
+
+        <div class="grid">
+
+            <div class="field">
+
+                <label>
+                    Your Name
+                </label>
+
+                <input
+                    id="name"
+                    placeholder="Example: Ashu Kumar">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Job Position
+                </label>
+
+                <input
+                    id="position"
+                    placeholder="Example: Ecommerce Executive">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Company Name
+                </label>
+
+                <input
+                    id="company"
+                    placeholder="Example: ABC Pvt Ltd">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Education
+                </label>
+
+                <input
+                    id="education"
+                    placeholder="Example: 12th Pass">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Experience
+                </label>
+
+                <input
+                    id="experience"
+                    placeholder="Example: Fresher">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Phone / Email
+                </label>
+
+                <input
+                    id="contact"
+                    placeholder="Example: 9876543210">
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>
+                    Your Skills
+                </label>
+
+                <input
+                    id="skills"
+                    placeholder="Example: MS Excel, Communication, Computer">
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>
+                    Additional Details
+                </label>
+
+                <textarea
+                    id="details"
+                    placeholder="Job ke baare mein koi extra information..."></textarea>
+
+            </div>
+
+        </div>
+
+
+       <button type="button" onclick="generateApplication()">
+    Generate Job Application
+</button>
+
+    </div>
+
+
+    <div class="result" id="result">
+
+        <h2>
+            Your Job Application
+        </h2>
+
+        <div id="applicationText"></div>
+
+        <button class="copy-btn" onclick="copyApplication()">
+            Copy Application
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+   
+
+function generateApplication() {
+
+    const name = document.getElementById("name").value.trim();
+    const position = document.getElementById("position").value.trim();
+    const company = document.getElementById("company").value.trim();
+    const education = document.getElementById("education").value.trim();
+    const experience = document.getElementById("experience").value.trim();
+    const contact = document.getElementById("contact").value.trim();
+    const skills = document.getElementById("skills").value.trim();
+    const details = document.getElementById("details").value.trim();
+
+    if (name === "" || position === "" || company === "") {
+        alert("Please enter Name, Job Position and Company Name.");
+        return;
+    }
+
+    let application = "";
+
+    application += "Subject: Application for " + position + " Position\n\n";
+
+    application += "Dear Hiring Manager,\n\n";
+
+    application += "I am writing to apply for the " + position +
+                   " position at " + company + ".\n\n";
+
+    application += "My name is " + name + ". ";
+
+    application += "I have completed " +
+                   (education || "my education") +
+                   " and I am currently " +
+                   (experience || "looking for a suitable opportunity") +
+                   ".\n\n";
+
+    application += "My skills include " +
+                   (skills || "computer skills, communication and teamwork") +
+                   ".\n\n";
+
+    if (details !== "") {
+        application += "Additional Information:\n";
+        application += details + "\n\n";
+    }
+
+    application += "I am interested in this opportunity and would be grateful " +
+                   "for the chance to discuss how I can contribute to your organization.\n\n";
+
+    application += "Thank you for considering my application. " +
+                   "I look forward to hearing from you.\n\n";
+
+    application += "Sincerely,\n";
+    application += name + "\n";
+
+    if (contact !== "") {
+        application += contact;
+    }
+
+
+    document.getElementById("applicationText").textContent = application;
+
+    document.getElementById("result").style.display = "block";
+
+}
+
+
+function copyApplication() {
+
+    const text =
+        document.getElementById("applicationText").textContent;
+
+    navigator.clipboard.writeText(text)
+        .then(function() {
+
+            alert("Application copied successfully!");
+
+        })
+        .catch(function() {
+
+            alert("Copy failed. Please copy the text manually.");
+
+        });
+
+}
+
+</script>
+    
+    
+
+
+
+
+</body>
+</html>

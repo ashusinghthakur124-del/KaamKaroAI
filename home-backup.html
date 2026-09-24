@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KaamKaro AI - Free AI Tools</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#111827;
+}
+
+nav{
+    background:#ffffff;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+.nav-btn{
+    text-decoration:none;
+    color:#174ea6;
+    font-weight:bold;
+}
+
+.hero{
+    text-align:center;
+    padding:70px 20px 45px;
+}
+
+.hero h1{
+    font-size:42px;
+    color:#111827;
+    margin-bottom:15px;
+}
+
+.hero h1 span{
+    color:#174ea6;
+}
+
+.hero p{
+    font-size:18px;
+    color:#6b7280;
+    max-width:650px;
+    margin:auto;
+    line-height:1.6;
+}
+
+.tools{
+    max-width:1100px;
+    margin:20px auto 70px;
+    padding:0 20px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    text-align:center;
+    transition:0.2s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.card h2{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#6b7280;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.btn{
+    display:inline-block;
+    background:#174ea6;
+    color:white;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#123d82;
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    background:#111827;
+    color:white;
+}
+
+@media(max-width:800px){
+    .tools{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">KaamKaro AI</div>
+
+    <a href="index.html" class="nav-btn">Resume Builder</a>
+</nav>
+
+<section class="hero">
+
+    <h1>KaamKaro <span>AI</span></h1>
+
+    <p>
+        Apna kaam batao, ready result pao.
+        Simple, fast aur useful AI tools — sab ek jagah.
+    </p>
+
+</section>
+
+<section class="tools">
+
+    <!-- Resume Builder -->
+    <div class="card">
+
+        <div class="icon">📄</div>
+
+        <h2>Resume Builder</h2>
+
+        <p>
+            Professional resume banao aur PDF mein save karo.
+        </p>
+
+        <a href="index.html" class="btn">
+            Open Tool
+        </a>
+
+    </div>
+
+
+    <!-- Professional Email -->
+    <div class="card">
+
+        <div class="icon">✉️</div>
+
+        <h2>Professional Email</h2>
+
+        <p>
+            Job, leave, business aur professional emails easily generate karo.
+        </p>
+
+        <a href="email.html" class="btn">
+            Open Tool
+        </a>
+
+    </div>
+
+
+    <!-- Invoice Generator -->
+    <div class="card">
+
+        <div class="icon">🧾</div>
+
+        <h2>Invoice Generator</h2>
+
+        <p>
+            Simple professional invoice generate karo.
+        </p>
+
+        <a href="invoice.html" class="btn">
+            Open Tool
+        </a>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 KaamKaro AI — Apna kaam batao, ready result pao.
+</footer>
+
+</body>
+</html>

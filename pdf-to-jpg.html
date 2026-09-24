@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PDF to JPG - KaamKaro AI</title>
+
+    <style>
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            font-family:Arial, sans-serif;
+            background:#f5f7fb;
+            color:#111827;
+        }
+
+        nav{
+            background:#fff;
+            padding:18px 8%;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        nav h1{
+            color:#174ea6;
+            font-size:24px;
+        }
+
+        nav a{
+            text-decoration:none;
+            color:#174ea6;
+            font-weight:bold;
+        }
+
+        .container{
+            max-width:800px;
+            margin:45px auto;
+            padding:20px;
+        }
+
+        .box{
+            background:#fff;
+            padding:35px;
+            border-radius:18px;
+            box-shadow:0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        h2{
+            text-align:center;
+            margin-bottom:10px;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#667085;
+            margin-bottom:30px;
+        }
+
+        .upload{
+            display:block;
+            width:100%;
+            min-height:180px;
+            border:2px dashed #b8c4d6;
+            border-radius:16px;
+            padding:40px 20px;
+            text-align:center;
+            cursor:pointer;
+            background:#fafcff;
+        }
+
+        .upload:hover{
+            border-color:#174ea6;
+            background:#f3f7ff;
+        }
+
+        .upload-icon{
+            font-size:50px;
+            margin-bottom:15px;
+        }
+
+        .upload strong{
+            display:block;
+            font-size:18px;
+        }
+
+        .upload p{
+            color:#667085;
+            margin-top:10px;
+            font-size:14px;
+        }
+
+        input[type="file"]{
+            display:none;
+        }
+
+        .info{
+            display:none;
+            margin-top:20px;
+            padding:15px;
+            background:#f3f7ff;
+            border-radius:10px;
+            line-height:1.7;
+        }
+
+        .page-control{
+            margin-top:25px;
+        }
+
+        .page-control label{
+            display:block;
+            font-weight:bold;
+            margin-bottom:10px;
+        }
+
+        .page-control input{
+            width:100%;
+            padding:13px;
+            border:1px solid #ccd5e1;
+            border-radius:9px;
+            font-size:15px;
+        }
+
+        .hint{
+            margin-top:8px;
+            color:#667085;
+            font-size:13px;
+        }
+
+        .main-btn{
+            width:100%;
+            padding:14px;
+            margin-top:25px;
+            border:none;
+            border-radius:10px;
+            background:#174ea6;
+            color:white;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .main-btn:hover{
+            background:#123d82;
+        }
+
+        #result{
+            display:none;
+            margin-top:25px;
+        }
+
+        .success{
+            padding:18px;
+            background:#f0fdf4;
+            border:1px solid #bbf7d0;
+            border-radius:12px;
+            color:#15803d;
+            margin-bottom:20px;
+        }
+
+        .pdf-section{
+            margin-top:25px;
+            padding:20px;
+            border:1px solid #e2e8f0;
+            border-radius:14px;
+            background:#fafafa;
+        }
+
+        .pdf-section h3{
+            color:#174ea6;
+            margin-bottom:15px;
+        }
+
+        .preview{
+            margin-top:18px;
+            padding:15px;
+            border:1px solid #e2e8f0;
+            border-radius:12px;
+            background:#fff;
+        }
+
+        .preview h4{
+            margin-bottom:12px;
+        }
+
+        .preview img{
+            width:100%;
+            max-height:500px;
+            object-fit:contain;
+            background:#fff;
+            border-radius:8px;
+            border:1px solid #ddd;
+        }
+
+        .download-page{
+            width:100%;
+            background:#15803d;
+            border:none;
+            padding:12px;
+            margin-top:12px;
+            border-radius:9px;
+            color:white;
+            font-size:15px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .download-page:hover{
+            background:#166534;
+        }
+
+        @media(max-width:600px){
+
+            .container{
+                margin:25px auto;
+            }
+
+            .box{
+                padding:25px 18px;
+            }
+
+            nav{
+                padding:16px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h1>KaamKaro AI</h1>
+    <a href="home.html">Home</a>
+</nav>
+
+
+<div class="container">
+
+    <div class="box">
+
+        <h2>PDF to JPG Converter</h2>
+
+        <p class="subtitle">
+            Multiple PDF files ko JPG images mein convert karo.
+        </p>
+
+
+        <label class="upload">
+
+            <div class="upload-icon">📄</div>
+
+            <strong>Choose PDF Files</strong>
+
+            <p>
+                Ek ya multiple PDF files select karo
+            </p>
+
+            <input
+                type="file"
+                id="pdfFile"
+                accept=".pdf,application/pdf"
+                multiple
+            >
+
+        </label>
+
+
+        <div id="fileInfo" class="info"></div>
+
+
+        <div class="page-control">
+
+            <label for="pages">
+                Pages to Convert
+            </label>
+
+            <input
+                type="text"
+                id="pages"
+                placeholder="Example: 1,3,5 or 2-5 or blank = all pages"
+            >
+
+            <p class="hint">
+                Ye page selection sabhi selected PDFs par apply hogi.
+            </p>
+
+        </div>
+
+
+        <button
+            class="main-btn"
+            onclick="convertPDFs()"
+        >
+            Convert PDF to JPG
+        </button>
+
+
+        <div id="result">
+
+            <div class="success">
+                ✅ PDF pages converted successfully!
+            </div>
+
+            <div id="previewArea"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PDF.JS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+
+let selectedFiles = [];
+
+
+/* FILE SELECTION */
+
+document.getElementById("pdfFile").addEventListener(
+    "change",
+    function(){
+
+        if(this.files.length === 0){
+            return;
+        }
+
+        selectedFiles =
+            Array.from(this.files);
+
+        const fileInfo =
+            document.getElementById("fileInfo");
+
+        fileInfo.style.display =
+            "block";
+
+        let html =
+            "<strong>" +
+            selectedFiles.length +
+            " PDF file(s) selected:</strong><br><br>";
+
+        selectedFiles.forEach(
+            function(file,index){
+
+                html +=
+                    (index + 1) +
+                    ". " +
+                    file.name +
+                    " (" +
+                    formatBytes(file.size) +
+                    ")<br>";
+            }
+        );
+
+        fileInfo.innerHTML = html;
+
+    }
+);
+
+
+/* FORMAT FILE SIZE */
+
+function formatBytes(bytes){
+
+    if(bytes === 0){
+        return "0 Bytes";
+    }
+
+    const sizes = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        parseFloat(
+            (
+                bytes /
+                Math.pow(1024,i)
+            ).toFixed(2)
+        ) +
+        " " +
+        sizes[i]
+    );
+}
+
+
+/* PAGE NUMBER PARSER */
+
+function getPageNumbers(
+    input,
+    totalPages
+){
+
+    if(!input.trim()){
+
+        const allPages = [];
+
+        for(
+            let i = 1;
+            i <= totalPages;
+            i++
+        ){
+
+            allPages.push(i);
+
+        }
+
+        return allPages;
+    }
+
+
+    const pages = new Set();
+
+
+    const parts =
+        input
+        .split(",")
+        .map(
+            item => item.trim()
+        );
+
+
+    for(
+        const part of parts
+    ){
+
+        if(
+            part.includes("-")
+        ){
+
+            const range =
+                part
+                .split("-")
+                .map(Number);
+
+
+            const start =
+                range[0];
+
+            const end =
+                range[1];
+
+
+            if(
+                !Number.isInteger(start) ||
+                !Number.isInteger(end) ||
+                start < 1 ||
+                end > totalPages ||
+                start > end
+            ){
+
+                throw new Error(
+                    "Invalid page range."
+                );
+
+            }
+
+
+            for(
+                let i = start;
+                i <= end;
+                i++
+            ){
+
+                pages.add(i);
+
+            }
+
+        }
+
+        else{
+
+            const page =
+                Number(part);
+
+
+            if(
+                !Number.isInteger(page) ||
+                page < 1 ||
+                page > totalPages
+            ){
+
+                throw new Error(
+                    "Invalid page number."
+                );
+
+            }
+
+
+            pages.add(page);
+
+        }
+
+    }
+
+
+    return Array
+        .from(pages)
+        .sort(
+            (a,b) => a-b
+        );
+
+}
+
+
+/* MAIN CONVERTER */
+
+async function convertPDFs(){
+
+    if(
+        selectedFiles.length === 0
+    ){
+
+        alert(
+            "Please select at least one PDF file."
+        );
+
+        return;
+
+    }
+
+
+    const pageInput =
+        document.getElementById(
+            "pages"
+        ).value;
+
+
+    const previewArea =
+        document.getElementById(
+            "previewArea"
+        );
+
+
+    previewArea.innerHTML = "";
+
+
+    document.getElementById(
+        "result"
+    ).style.display = "none";
+
+
+    try{
+
+        for(
+            let fileIndex = 0;
+            fileIndex < selectedFiles.length;
+            fileIndex++
+        ){
+
+            const file =
+                selectedFiles[fileIndex];
+
+
+            const arrayBuffer =
+                await file.arrayBuffer();
+
+
+            const pdf =
+                await pdfjsLib
+                .getDocument({
+                    data: arrayBuffer
+                })
+                .promise;
+
+
+            const pageNumbers =
+                getPageNumbers(
+                    pageInput,
+                    pdf.numPages
+                );
+
+
+            const pdfSection =
+                document.createElement(
+                    "div"
+                );
+
+
+            pdfSection.className =
+                "pdf-section";
+
+
+            const pdfTitle =
+                document.createElement(
+                    "h3"
+                );
+
+
+            pdfTitle.textContent =
+                "📄 " +
+                file.name;
+
+
+            pdfSection.appendChild(
+                pdfTitle
+            );
+
+
+            previewArea.appendChild(
+                pdfSection
+            );
+
+
+            for(
+                const pageNumber
+                of pageNumbers
+            ){
+
+                const page =
+                    await pdf.getPage(
+                        pageNumber
+                    );
+
+
+                const scale = 2;
+
+
+                const viewport =
+                    page.getViewport({
+                        scale: scale
+                    });
+
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                const context =
+                    canvas.getContext(
+                        "2d"
+                    );
+
+
+                canvas.width =
+                    viewport.width;
+
+
+                canvas.height =
+                    viewport.height;
+
+
+                await page.render({
+
+                    canvasContext:
+                        context,
+
+                    viewport:
+                        viewport
+
+                }).promise;
+
+
+                const imageData =
+                    canvas.toDataURL(
+                        "image/jpeg",
+                        0.92
+                    );
+
+
+                const preview =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                preview.className =
+                    "preview";
+
+
+                const title =
+                    document.createElement(
+                        "h4"
+                    );
+
+
+                title.textContent =
+                    "Page " +
+                    pageNumber;
+
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                image.src =
+                    imageData;
+
+
+                const downloadButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                downloadButton.className =
+                    "download-page";
+
+
+                downloadButton.textContent =
+                    "Download JPG";
+
+
+                downloadButton.onclick =
+                    function(){
+
+                        const link =
+                            document.createElement(
+                                "a"
+                            );
+
+
+                        link.href =
+                            imageData;
+
+
+                        link.download =
+                            cleanFileName(
+                                file.name
+                            ) +
+                            "-Page-" +
+                            pageNumber +
+                            ".jpg";
+
+
+                        link.click();
+
+                    };
+
+
+                preview.appendChild(
+                    title
+                );
+
+
+                preview.appendChild(
+                    image
+                );
+
+
+                preview.appendChild(
+                    downloadButton
+                );
+
+
+                pdfSection.appendChild(
+                    preview
+                );
+
+            }
+
+        }
+
+
+        document.getElementById(
+            "result"
+        ).style.display =
+            "block";
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+
+        alert(
+            "PDF convert nahi ho paya. Please check the PDF files aur page numbers."
+        );
+
+    }
+
+}
+
+
+/* CLEAN FILE NAME */
+
+function cleanFileName(
+    fileName
+){
+
+    return fileName
+        .replace(
+            /\.pdf$/i,
+            ""
+        )
+        .replace(
+            /[^a-z0-9_-]/gi,
+            "-"
+        );
+
+}
+
+</script>
+
+</body>
+</html>

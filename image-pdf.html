@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image to PDF - KaamKaro AI</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#111827;
+}
+
+nav{
+    background:white;
+    height:72px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+.nav-home{
+    text-decoration:none;
+    color:#174ea6;
+    font-weight:bold;
+}
+
+.container{
+    max-width:750px;
+    margin:50px auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#667085;
+    margin-bottom:30px;
+}
+
+.box{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 6px 25px rgba(0,0,0,0.08);
+}
+
+.upload{
+    .upload{
+    display:block;
+    width:100%;
+    min-height:180px;
+    border:2px dashed #b8c4d6;
+    border-radius:16px;
+    padding:40px 20px;
+    text-align:center;
+    cursor:pointer;
+    background:#fafcff;
+    transition:0.2s;
+}
+
+.upload:hover{
+    border-color:#174ea6;
+    background:#f3f7ff;
+}
+
+.upload-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.upload strong{
+    display:block;
+    font-size:18px;
+    color:#111827;
+}
+
+.upload p{
+    color:#667085;
+    margin-top:10px;
+    font-size:14px;
+}
+}
+
+.upload:hover{
+    border-color:#174ea6;
+    background:#f8faff;
+}
+
+.upload-icon{
+    font-size:45px;
+    margin-bottom:12px;
+}
+
+.upload p{
+    color:#667085;
+    margin-top:8px;
+}
+
+input[type="file"]{
+    display:none;
+}
+
+#preview{
+    margin-top:25px;
+}
+
+.preview-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:12px;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.preview-item img{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:7px;
+}
+
+.preview-name{
+    font-size:14px;
+    word-break:break-all;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    border:none;
+    border-radius:9px;
+    background:#174ea6;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#123d82;
+}
+
+button:disabled{
+    background:#9ca3af;
+    cursor:not-allowed;
+}
+
+.status{
+    text-align:center;
+    margin-top:15px;
+    color:#667085;
+}
+
+@media(max-width:600px){
+
+    .container{
+        margin:30px auto;
+    }
+
+    h1{
+        font-size:30px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+    <a href="home.html" class="nav-home">
+        Home
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>
+        Image to PDF
+    </h1>
+
+    <p class="subtitle">
+        Images select karo aur ek PDF file mein convert karo.
+    </p>
+
+
+    <div class="box">
+
+        <label class="upload" for="imageInput">
+
+            <div class="upload-icon">
+                🖼️
+            </div>
+
+            <strong>
+                Click to select images
+            </strong>
+
+            <p>
+                JPG, JPEG, PNG supported
+            </p>
+
+        </label>
+
+
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/jpeg,image/png"
+            multiple
+        >
+
+
+        <div id="preview"></div>
+
+
+        <button
+            id="createBtn"
+            onclick="createPDF()"
+            disabled>
+            Create PDF
+        </button>
+
+
+        <div class="status" id="status"></div>
+
+    </div>
+
+</div>
+
+
+<!-- jsPDF library -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+<script>
+
+let selectedImages = [];
+
+
+const imageInput =
+    document.getElementById("imageInput");
+
+const preview =
+    document.getElementById("preview");
+
+const createBtn =
+    document.getElementById("createBtn");
+
+const statusText =
+    document.getElementById("status");
+
+
+imageInput.addEventListener("change", function(){
+
+    selectedImages = Array.from(this.files);
+
+    preview.innerHTML = "";
+
+    if(selectedImages.length === 0){
+
+        createBtn.disabled = true;
+
+        return;
+
+    }
+
+
+    selectedImages.forEach(function(file){
+
+        const reader = new FileReader();
+
+
+        reader.onload = function(e){
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "preview-item";
+
+
+            item.innerHTML = `
+
+                <img src="${e.target.result}">
+
+                <div class="preview-name">
+                    ${file.name}
+                </div>
+
+            `;
+
+
+            preview.appendChild(item);
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+    });
+
+
+    createBtn.disabled = false;
+
+    statusText.textContent =
+        selectedImages.length + " image(s) selected.";
+
+});
+
+
+async function createPDF(){
+
+    if(selectedImages.length === 0){
+
+        alert("Please select at least one image.");
+
+        return;
+
+    }
+
+
+    createBtn.disabled = true;
+
+    statusText.textContent =
+        "Creating PDF...";
+
+
+    const { jsPDF } = window.jspdf;
+
+
+    const pdf =
+        new jsPDF("p","mm","a4");
+
+
+    for(let i = 0; i < selectedImages.length; i++){
+
+        const file =
+            selectedImages[i];
+
+
+        const imageData =
+            await readImage(file);
+
+
+        const img =
+            new Image();
+
+
+        img.src =
+            imageData;
+
+
+        await new Promise(function(resolve){
+
+            img.onload =
+                resolve;
+
+        });
+
+
+        const pageWidth =
+            210;
+
+        const pageHeight =
+            297;
+
+        const margin =
+            10;
+
+
+        const maxWidth =
+            pageWidth - margin * 2;
+
+        const maxHeight =
+            pageHeight - margin * 2;
+
+
+        let width =
+            img.width;
+
+        let height =
+            img.height;
+
+
+        const ratio =
+            Math.min(
+                maxWidth / width,
+                maxHeight / height
+            );
+
+
+        width =
+            width * ratio;
+
+        height =
+            height * ratio;
+
+
+        const x =
+            (pageWidth - width) / 2;
+
+        const y =
+            (pageHeight - height) / 2;
+
+
+        if(i > 0){
+
+            pdf.addPage();
+
+        }
+
+
+        let format =
+            "JPEG";
+
+
+        if(file.type === "image/png"){
+
+            format =
+                "PNG";
+
+        }
+
+
+        pdf.addImage(
+            imageData,
+            format,
+            x,
+            y,
+            width,
+            height
+        );
+
+    }
+
+
+    pdf.save("KaamKaro-AI-Images.pdf");
+
+
+    statusText.textContent =
+        "PDF created successfully!";
+
+
+    createBtn.disabled = false;
+
+}
+
+
+function readImage(file){
+
+    return new Promise(function(resolve,reject){
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(){
+
+                resolve(reader.result);
+
+            };
+
+
+        reader.onerror =
+            reject;
+
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

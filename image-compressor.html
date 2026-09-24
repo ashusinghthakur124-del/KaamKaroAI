@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Compressor - KaamKaro AI</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#172033;
+}
+
+.navbar{
+    background:white;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+.nav-btn{
+    text-decoration:none;
+    background:#174ea6;
+    color:white;
+    padding:10px 18px;
+    border-radius:8px;
+}
+
+.container{
+    max-width:800px;
+    margin:50px auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.08);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#667085;
+    margin-bottom:30px;
+}
+
+.upload{
+    display:block;
+    width:100%;
+    min-height:180px;
+    border:2px dashed #b8c4d6;
+    border-radius:16px;
+    padding:40px 20px;
+    text-align:center;
+    cursor:pointer;
+    background:#fafcff;
+}
+
+.upload:hover{
+    border-color:#174ea6;
+    background:#f3f7ff;
+}
+
+.upload-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.upload strong{
+    display:block;
+    font-size:18px;
+}
+
+.upload p{
+    color:#667085;
+    margin-top:10px;
+}
+
+input[type="file"]{
+    display:none;
+}
+
+.preview{
+    margin-top:25px;
+    text-align:center;
+}
+
+.preview img{
+    max-width:100%;
+    max-height:300px;
+    border-radius:12px;
+}
+
+.info{
+    margin-top:15px;
+    text-align:center;
+    color:#667085;
+}
+
+.controls{
+    margin-top:25px;
+}
+
+.controls label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+input[type="range"]{
+    width:100%;
+}
+
+.quality-value{
+    text-align:center;
+    margin-top:8px;
+    font-weight:bold;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#174ea6;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#123d82;
+}
+
+button:disabled{
+    background:#9aa5b5;
+    cursor:not-allowed;
+}
+
+
+/* SUCCESS RESULT */
+
+.compression-result{
+    display:none;
+    margin-top:30px;
+    padding:28px;
+    border:2px solid #d8f0e5;
+    border-radius:16px;
+    background:#f7fffb;
+    text-align:center;
+}
+
+.success-title{
+    font-size:24px;
+    font-weight:bold;
+    color:#16834b;
+    margin-bottom:28px;
+}
+
+.size-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:50px;
+    flex-wrap:wrap;
+}
+
+.size-item{
+    min-width:170px;
+}
+
+.size-label{
+    font-size:15px;
+    color:#667085;
+    margin-bottom:8px;
+}
+
+.size-value{
+    font-size:26px;
+    font-weight:bold;
+    color:#172033;
+}
+
+.smaller-badge{
+    display:inline-block;
+    margin-top:28px;
+    padding:12px 25px;
+    border-radius:30px;
+    background:#dff7eb;
+    color:#16834b;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.result-message{
+    margin-top:20px;
+    color:#667085;
+    font-size:15px;
+}
+
+@media(max-width:600px){
+
+    .card{
+        padding:22px;
+    }
+
+    .navbar{
+        padding:15px 5%;
+    }
+
+    .size-box{
+        gap:25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+    <a href="home.html" class="nav-btn">
+        Home
+    </a>
+
+</div>
+
+
+
+<div class="container">
+
+<div class="card">
+
+<h1>Image Compressor</h1>
+
+<p class="subtitle">
+Image ka size kam karo aur kitna size kam hua turant dekho.
+</p>
+
+
+<label class="upload" for="imageInput">
+
+    <div class="upload-icon">
+        🖼️
+    </div>
+
+    <strong>
+        Click to upload image
+    </strong>
+
+    <p>
+        JPG, JPEG ya PNG image select karo
+    </p>
+
+</label>
+
+
+<input
+    type="file"
+    id="imageInput"
+    accept="image/jpeg,image/png"
+>
+
+
+<div class="preview" id="preview"></div>
+
+
+<div class="info" id="fileInfo"></div>
+
+
+<div class="controls">
+
+    <label for="quality">
+        Compression Quality
+    </label>
+
+    <input
+        type="range"
+        id="quality"
+        min="10"
+        max="100"
+        value="70"
+    >
+
+    <div class="quality-value">
+
+        Quality:
+        <span id="qualityValue">70</span>%
+
+    </div>
+
+</div>
+
+
+<button
+    id="compressBtn"
+    onclick="compressImage()"
+    disabled
+>
+    Compress & Download
+</button>
+
+
+
+<!-- SUCCESS RESULT -->
+
+<div
+    class="compression-result"
+    id="compressionResult"
+>
+
+    <div class="success-title">
+
+        ✅ Image Compressed Successfully!
+
+    </div>
+
+
+    <div class="size-box">
+
+
+        <div class="size-item">
+
+            <div class="size-label">
+                Original size
+            </div>
+
+            <div
+                class="size-value"
+                id="originalSizeResult"
+            >
+                0 KB
+            </div>
+
+        </div>
+
+
+        <div class="size-item">
+
+            <div class="size-label">
+                Compressed size
+            </div>
+
+            <div
+                class="size-value"
+                id="compressedSizeResult"
+            >
+                0 KB
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div
+        class="smaller-badge"
+        id="smallerBadge"
+    >
+        ↓ 0% smaller
+    </div>
+
+
+    <div
+        class="result-message"
+        id="resultMessage"
+    >
+        Your image has been compressed.
+
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+let selectedFile = null;
+
+
+const imageInput =
+    document.getElementById("imageInput");
+
+const quality =
+    document.getElementById("quality");
+
+const qualityValue =
+    document.getElementById("qualityValue");
+
+const compressBtn =
+    document.getElementById("compressBtn");
+
+
+quality.addEventListener("input", function(){
+
+    qualityValue.textContent = quality.value;
+
+});
+
+
+imageInput.addEventListener("change", function(){
+
+    const file = imageInput.files[0];
+
+    if(!file){
+        return;
+    }
+
+    selectedFile = file;
+
+
+    const imageURL =
+        URL.createObjectURL(file);
+
+
+    document.getElementById("preview").innerHTML =
+        '<img src="' + imageURL + '" alt="Preview">';
+
+
+    const sizeKB =
+        (file.size / 1024).toFixed(1);
+
+
+    document.getElementById("fileInfo").textContent =
+        "Original size: " + sizeKB + " KB";
+
+
+    document.getElementById("compressionResult").style.display =
+        "none";
+
+
+    compressBtn.disabled = false;
+
+});
+
+
+
+function compressImage(){
+
+    if(!selectedFile){
+        return;
+    }
+
+
+    const image = new Image();
+
+
+    image.onload = function(){
+
+        const canvas =
+            document.createElement("canvas");
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        canvas.width = image.width;
+
+        canvas.height = image.height;
+
+
+        ctx.drawImage(
+            image,
+            0,
+            0,
+            image.width,
+            image.height
+        );
+
+
+        const compressionQuality =
+            Number(quality.value) / 100;
+
+
+        canvas.toBlob(
+
+            function(blob){
+
+                if(!blob){
+
+                    alert("Compression failed.");
+
+                    return;
+
+                }
+
+
+                const url =
+                    URL.createObjectURL(blob);
+
+
+                const link =
+                    document.createElement("a");
+
+
+                link.href = url;
+
+
+                link.download =
+                    "KaamKaro-AI-Compressed-Image.jpg";
+
+
+                document.body.appendChild(link);
+
+                link.click();
+
+                document.body.removeChild(link);
+
+
+                /* SIZE CALCULATION */
+
+                const originalKB =
+                    selectedFile.size / 1024;
+
+
+                const compressedKB =
+                    blob.size / 1024;
+
+
+                let savedPercent =
+                    ((originalKB - compressedKB)
+                    / originalKB) * 100;
+
+
+                savedPercent =
+                    Math.max(0, savedPercent);
+
+
+                savedPercent =
+                    savedPercent.toFixed(1);
+
+
+                /* SHOW RESULT */
+
+                document.getElementById(
+                    "originalSizeResult"
+                ).textContent =
+                    originalKB.toFixed(1) + " KB";
+
+
+                document.getElementById(
+                    "compressedSizeResult"
+                ).textContent =
+                    compressedKB.toFixed(1) + " KB";
+
+
+                document.getElementById(
+                    "smallerBadge"
+                ).textContent =
+                    "↓ " + savedPercent + "% smaller";
+
+
+                document.getElementById(
+                    "resultMessage"
+                ).textContent =
+                    "Your image is " +
+                    savedPercent +
+                    "% smaller than the original size.";
+
+
+                document.getElementById(
+                    "compressionResult"
+                ).style.display =
+                    "block";
+
+            },
+
+            "image/jpeg",
+
+            compressionQuality
+
+        );
+
+    };
+
+
+    image.src =
+        URL.createObjectURL(selectedFile);
+
+}
+
+</script>
+
+
+</body>
+</html>

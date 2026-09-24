@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - KaamKaro AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #0f172a;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 18px 6%;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #174ea6;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #174ea6;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        .account-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .welcome p {
+            color: #64748b;
+        }
+
+        .account-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .account-card h2 {
+            margin-top: 0;
+            color: #174ea6;
+        }
+
+        .user-info {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            padding: 15px 18px;
+            border-radius: 10px;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .tool {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #0f172a;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .tool:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            border: none;
+            background: #174ea6;
+            color: white;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .logout-btn:hover {
+            background: #123b7a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 30px 6%;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        footer p {
+            color: #cbd5e1;
+            margin: 8px 0;
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .footer-contact a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-contact a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer-contact {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+
+        <a href="home.html" class="logo">
+            KaamKaro AI
+        </a>
+
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="home.html#tools">Tools</a>
+            <a href="account.html">My Account</a>
+        </div>
+
+    </div>
+</header>
+
+
+<main class="account-container">
+
+    <div class="welcome">
+        <h1>My Account</h1>
+        <p id="welcomeText">Welcome to KaamKaro AI</p>
+    </div>
+
+
+    <div class="account-card">
+
+        <h2>👤 Account Information</h2>
+
+        <div class="user-info">
+
+            <div class="info-box">
+                <strong>Name</strong>
+                <span id="userName">Loading...</span>
+            </div>
+
+            <div class="info-box">
+                <strong>Email</strong>
+                <span id="userEmail">Loading...</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="account-card">
+
+        <h2>🛠️ My Tools</h2>
+
+        <div class="tools-grid">
+
+            <a href="kaamkaro ai.html" class="tool">
+                📄 Resume Builder
+            </a>
+
+            <a href="email.html" class="tool">
+                ✉️ Email Generator
+            </a>
+
+            <a href="invoice.html" class="tool">
+                🧾 Invoice Generator
+            </a>
+
+            <a href="qr.html" class="tool">
+                🔳 QR Code Generator
+            </a>
+
+            <a href="image-pdf.html" class="tool">
+                🖼️ Image to PDF
+            </a>
+
+            <a href="job-application.html" class="tool">
+                💼 Job Application
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="account-card">
+
+        <h2>Account</h2>
+
+        <button class="logout-btn" onclick="logoutUser()">
+            Logout
+        </button>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <strong>KaamKaro AI</strong>
+
+    <p>
+        Apna kaam batao, ready result pao.
+    </p>
+
+    <div class="footer-contact">
+
+        <a href="mailto:kaamkaroai@gmail.com">
+            ✉️ kaamkaroai@gmail.com
+        </a>
+
+        <a href="https://www.instagram.com/kaamkaroai/"
+           target="_blank"
+           rel="noopener noreferrer">
+            📸 @kaamkaroai
+        </a>
+
+    </div>
+
+    <p>
+        © 2026 KaamKaro AI. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const loggedIn = localStorage.getItem("kaamkaroLoggedIn");
+    const savedUser = localStorage.getItem("kaamkaroUser");
+
+    if (loggedIn !== "true" || !savedUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const user = JSON.parse(savedUser);
+
+    document.getElementById("userName").textContent =
+        user.name || "User";
+
+    document.getElementById("userEmail").textContent =
+        user.email || "No email";
+
+    document.getElementById("welcomeText").textContent =
+        "Welcome back, " + (user.name || "User") + "!";
+});
+
+
+function logoutUser() {
+
+    const confirmLogout = confirm("Do you want to logout?");
+
+    if (!confirmLogout) {
+        return;
+    }
+
+    localStorage.removeItem("kaamkaroLoggedIn");
+
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

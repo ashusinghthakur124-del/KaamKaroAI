@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KaamKaro AI - Resume Builder</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f7faff;
+    color: #0b1736;
+}
+
+nav {
+    background: white;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e9f2;
+}
+
+.logo {
+    color: #1557d6;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    color: #1557d6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 950px;
+    margin: 45px auto;
+    padding: 20px;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.heading h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.heading p {
+    color: #667085;
+}
+
+/* FORM */
+
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d9dfeb;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    border: 0;
+    border-radius: 10px;
+    background: #1557d6;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0d46b5;
+}
+
+/* TEMPLATE SELECTOR */
+
+.templates {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.template-card {
+    border: 2px solid #e0e5ee;
+    border-radius: 12px;
+    padding: 18px;
+    cursor: pointer;
+    text-align: center;
+    transition: .2s;
+}
+
+.template-card:hover {
+    border-color: #1557d6;
+}
+
+.template-card.active {
+    border-color: #1557d6;
+    background: #f1f6ff;
+}
+
+.template-card h3 {
+    margin-bottom: 7px;
+}
+
+.template-card p {
+    color: #667085;
+    font-size: 13px;
+}
+
+/* RESUME */
+
+#resumeOutput {
+    display: none;
+}
+
+.resume {
+    background: white;
+    border: 1px solid #ddd;
+    min-height: 900px;
+    padding: 45px;
+}
+
+.resume h1 {
+    margin-bottom: 8px;
+}
+
+.contact {
+    margin-bottom: 28px;
+}
+
+.resume h3 {
+    margin-top: 24px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+}
+
+.resume p {
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.pdf-button {
+    margin-top: 20px;
+}
+
+/* PROFESSIONAL TEMPLATE */
+
+.resume.professional {
+    border-top: 8px solid #1557d6;
+}
+
+.professional h1 {
+    color: #1557d6;
+    font-size: 36px;
+}
+
+.professional h3 {
+    color: #0b1736;
+    border-bottom: 2px solid #1557d6;
+}
+
+/* MODERN TEMPLATE */
+
+.resume.modern {
+    border-left: 12px solid #1557d6;
+}
+
+.modern h1 {
+    color: #1557d6;
+    font-size: 40px;
+}
+
+.modern .contact {
+    color: #1557d6;
+}
+
+.modern h3 {
+    color: #1557d6;
+    border-bottom: 1px solid #d9dfeb;
+}
+
+/* SIMPLE TEMPLATE */
+
+.resume.simple {
+    border: 1px solid #d9dfeb;
+}
+
+.simple h1 {
+    color: #222;
+    font-size: 34px;
+}
+
+.simple .contact {
+    color: #666;
+}
+
+.simple h3 {
+    color: #333;
+    border-bottom: 1px solid #333;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .heading h1 {
+        font-size: 30px;
+    }
+
+    .box {
+        padding: 20px;
+    }
+
+    .templates {
+        grid-template-columns: 1fr;
+    }
+
+    .resume {
+        padding: 25px;
+    }
+}
+
+/* PRINT / PDF */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    nav,
+    .heading,
+    #formBox,
+    .pdf-button {
+        display: none !important;
+    }
+
+    .container {
+        margin: 0;
+        max-width: none;
+        padding: 0;
+    }
+
+    .box {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #resumeOutput {
+        display: block !important;
+    }
+
+    .resume {
+        border: none !important;
+        min-height: auto;
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">KaamKaro AI</div>
+    <a href="#">Home</a>
+</nav>
+
+<div class="container">
+
+    <div class="heading">
+        <h1>Resume Builder</h1>
+        <p>Apni details bharo, template choose karo aur professional resume ready karo.</p>
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="box" id="formBox">
+
+        <h2 style="margin-bottom:20px;">
+            1. Enter Your Details
+        </h2>
+
+        <div class="form-group">
+            <label>Full Name</label>
+            <input id="name" type="text" placeholder="e.g. Ashu Sharma">
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input id="email" type="email" placeholder="e.g. ashu@email.com">
+        </div>
+
+        <div class="form-group">
+            <label>Phone</label>
+            <input id="phone" type="text" placeholder="e.g. 9876543210">
+        </div>
+
+        <div class="form-group">
+            <label>Education</label>
+            <textarea id="education"
+                placeholder="e.g. 12th Pass, CBSE, 2025"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Skills</label>
+            <textarea id="skills"
+                placeholder="e.g. Communication, MS Excel, Customer Service"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Experience</label>
+            <textarea id="experience"
+                placeholder="e.g. Fresher"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Career Objective</label>
+            <textarea id="objective"
+                placeholder="Write your career objective"></textarea>
+        </div>
+
+
+        <h2 style="margin:30px 0 15px;">
+            2. Choose Resume Template
+        </h2>
+
+        <div class="templates">
+
+            <div class="template-card active"
+                 id="professionalCard"
+                 onclick="selectTemplate('professional')">
+
+                <h3>💼 Professional</h3>
+                <p>Corporate & job-ready</p>
+
+            </div>
+
+            <div class="template-card"
+                 id="modernCard"
+                 onclick="selectTemplate('modern')">
+
+                <h3>✨ Modern</h3>
+                <p>Clean & stylish</p>
+
+            </div>
+
+            <div class="template-card"
+                 id="simpleCard"
+                 onclick="selectTemplate('simple')">
+
+                <h3>📄 Simple</h3>
+                <p>Minimal & fresher-friendly</p>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button onclick="generateResume()">
+            Generate Resume
+        </button>
+
+    </div>
+
+
+    <!-- RESUME PREVIEW -->
+
+    <div class="box" id="resumeOutput">
+
+        <h2 style="margin-bottom:20px;">
+            Resume Preview
+        </h2>
+
+        <div class="resume professional" id="resume">
+
+            <h1 id="rName"></h1>
+
+            <div class="contact">
+                <span id="rEmail"></span>
+                &nbsp; | &nbsp;
+                <span id="rPhone"></span>
+            </div>
+
+            <h3>Career Objective</h3>
+            <p id="rObjective"></p>
+
+            <h3>Education</h3>
+            <p id="rEducation"></p>
+
+            <h3>Skills</h3>
+            <p id="rSkills"></p>
+
+            <h3>Experience</h3>
+            <p id="rExperience"></p>
+
+        </div>
+
+        <div class="pdf-button">
+            <button onclick="savePDF()">
+                📥 Save Resume as PDF
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let selectedTemplate = "professional";
+
+
+/* TEMPLATE SELECTOR */
+
+function selectTemplate(template) {
+
+    selectedTemplate = template;
+
+    document.getElementById("professionalCard")
+        .classList.remove("active");
+
+    document.getElementById("modernCard")
+        .classList.remove("active");
+
+    document.getElementById("simpleCard")
+        .classList.remove("active");
+
+
+    document.getElementById(template + "Card")
+        .classList.add("active");
+
+
+    const resume = document.getElementById("resume");
+
+    resume.classList.remove(
+        "professional",
+        "modern",
+        "simple"
+    );
+
+    resume.classList.add(template);
+
+
+    /* If preview already exists, update it immediately */
+
+    if (document.getElementById("resumeOutput").style.display === "block") {
+
+        document.getElementById("resumeOutput")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+    }
+}
+
+
+/* GENERATE RESUME */
+
+function generateResume() {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const education =
+        document.getElementById("education").value.trim();
+
+    const skills =
+        document.getElementById("skills").value.trim();
+
+    const experience =
+        document.getElementById("experience").value.trim();
+
+    const objective =
+        document.getElementById("objective").value.trim();
+
+
+    if (!name || !email || !phone) {
+
+        alert(
+            "Please enter your Name, Email and Phone."
+        );
+
+        return;
+    }
+
+
+    document.getElementById("rName").textContent =
+        name;
+
+    document.getElementById("rEmail").textContent =
+        email;
+
+    document.getElementById("rPhone").textContent =
+        phone;
+
+    document.getElementById("rEducation").textContent =
+        education || "Not provided";
+
+    document.getElementById("rSkills").textContent =
+        skills || "Not provided";
+
+    document.getElementById("rExperience").textContent =
+        experience || "Fresher";
+
+    document.getElementById("rObjective").textContent =
+        objective ||
+        "Motivated professional seeking an opportunity to grow and develop new skills.";
+
+
+    /* Apply selected template */
+
+    const resume = document.getElementById("resume");
+
+    resume.classList.remove(
+        "professional",
+        "modern",
+        "simple"
+    );
+
+    resume.classList.add(selectedTemplate);
+
+
+    document.getElementById("resumeOutput")
+        .style.display = "block";
+
+
+    document.getElementById("resumeOutput")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+}
+
+
+/* SAVE PDF */
+
+function savePDF() {
+
+    window.print();
+
+}
+
+</script>
+
+</body>
+</html>

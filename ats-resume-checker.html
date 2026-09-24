@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ATS Resume Checker - KaamKaro AI</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#111827;
+}
+
+nav{
+    background:#fff;
+    padding:18px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+nav a{
+    text-decoration:none;
+    color:#174ea6;
+    font-weight:bold;
+}
+
+.container{
+    max-width:950px;
+    margin:40px auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#667085;
+    margin-bottom:30px;
+}
+
+.card{
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    margin-bottom:25px;
+}
+
+h2{
+    margin-bottom:15px;
+}
+
+.upload{
+    display:block;
+    width:100%;
+    min-height:180px;
+    border:2px dashed #b8c4d6;
+    border-radius:16px;
+    padding:35px 20px;
+    text-align:center;
+    cursor:pointer;
+    background:#fafcff;
+    transition:.2s;
+}
+
+.upload:hover{
+    border-color:#174ea6;
+    background:#f3f7ff;
+}
+
+.upload-icon{
+    font-size:50px;
+    margin-bottom:12px;
+}
+
+.upload strong{
+    display:block;
+    font-size:18px;
+}
+
+.upload p{
+    color:#667085;
+    margin-top:8px;
+    font-size:14px;
+}
+
+input[type="file"]{
+    display:none;
+}
+
+.preview{
+    margin-top:20px;
+    text-align:center;
+}
+
+.preview img{
+    max-width:100%;
+    max-height:400px;
+    border-radius:12px;
+    border:1px solid #ddd;
+}
+
+.file-name{
+    margin-top:12px;
+    font-weight:bold;
+    color:#174ea6;
+}
+
+textarea{
+    width:100%;
+    min-height:180px;
+    padding:15px;
+    border:1px solid #d0d5dd;
+    border-radius:12px;
+    resize:vertical;
+    font-size:15px;
+    outline:none;
+}
+
+textarea:focus{
+    border-color:#174ea6;
+}
+
+button{
+    border:none;
+    background:#174ea6;
+    color:#fff;
+    padding:14px 22px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+button:hover{
+    background:#123b80;
+}
+
+.result{
+    display:none;
+}
+
+.score{
+    font-size:44px;
+    font-weight:bold;
+    color:#174ea6;
+    margin:15px 0;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 12px;
+    border-radius:20px;
+    background:#eef4ff;
+    color:#174ea6;
+    margin:4px;
+    font-size:14px;
+}
+
+.success{
+    background:#ecfdf3;
+    color:#027a48;
+}
+
+.warning{
+    background:#fff4e5;
+    color:#a15c00;
+}
+
+.missing{
+    background:#fff1f2;
+    color:#b42318;
+}
+
+.section-box{
+    margin-bottom:18px;
+}
+
+.section-title{
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+ul{
+    margin-left:20px;
+    line-height:1.8;
+}
+
+.info{
+    color:#667085;
+    font-size:14px;
+    line-height:1.6;
+}
+
+hr{
+    margin:25px 0;
+    border:none;
+    border-top:1px solid #eee;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#667085;
+}
+
+@media(max-width:600px){
+
+    .container{
+        margin:20px auto;
+        padding:15px;
+    }
+
+    nav{
+        padding:15px 5%;
+    }
+
+    .logo{
+        font-size:21px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        KaamKaro AI
+    </div>
+
+    <a href="home.html">
+        Home
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+<h1>ATS Resume Checker</h1>
+
+<p class="subtitle">
+Check your resume against a job description and find important keywords you may be missing.
+</p>
+
+
+<!-- UPLOAD RESUME -->
+
+<div class="card">
+
+<h2>📄 Upload Resume</h2>
+
+<label class="upload">
+
+    <input
+        type="file"
+        id="resumeFile"
+        accept=".jpg,.jpeg,.png,.pdf"
+    >
+
+    <div class="upload-icon">
+        📤
+    </div>
+
+    <strong>
+        Upload Resume
+    </strong>
+
+    <p>
+        JPG, JPEG, PNG or PDF
+    </p>
+
+</label>
+
+<div
+    class="file-name"
+    id="fileName">
+</div>
+
+<div
+    class="preview"
+    id="preview">
+</div>
+
+</div>
+
+
+<!-- RESUME TEXT -->
+
+<div class="card">
+
+<h2>📝 Resume Text</h2>
+
+<p class="info">
+For accurate keyword analysis, paste the text from your resume here.
+</p>
+
+<br>
+
+<textarea
+    id="resumeText"
+    placeholder="Paste your complete resume text here...">
+</textarea>
+
+</div>
+
+
+<!-- JOB DESCRIPTION -->
+
+<div class="card">
+
+<h2>💼 Job Description</h2>
+
+<p class="info">
+Paste the job description for the position you want to apply for.
+</p>
+
+<br>
+
+<textarea
+    id="jobDescription"
+    placeholder="Paste the complete job description here...">
+</textarea>
+
+<button
+    type="button"
+    onclick="checkResume()">
+
+    🔍 Check My Resume
+
+</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div
+    class="card result"
+    id="result">
+
+<h2>
+📊 Resume Analysis
+</h2>
+
+
+<div
+    class="score"
+    id="score">
+    0%
+</div>
+
+
+<p id="scoreText"></p>
+
+
+<hr>
+
+
+<!-- RESUME SECTIONS -->
+
+<div class="section-box">
+
+<h2>
+📚 Resume Sections
+</h2>
+
+<div id="sections"></div>
+
+</div>
+
+
+<hr>
+
+
+<!-- MATCHED -->
+
+<div class="section-box">
+
+<h2>
+✅ Matched Keywords
+</h2>
+
+<p class="info">
+Important keywords found in both the job description and your resume.
+</p>
+
+<br>
+
+<div id="matched"></div>
+
+</div>
+
+
+<hr>
+
+
+<!-- MISSING -->
+
+<div class="section-box">
+
+<h2>
+⚠️ Missing Keywords
+</h2>
+
+<p class="info">
+Important job-description terms that were not detected in your resume.
+</p>
+
+<br>
+
+<div id="missing"></div>
+
+</div>
+
+
+<hr>
+
+
+<!-- SUGGESTIONS -->
+
+<div class="section-box">
+
+<h2>
+💡 What You Should Add
+</h2>
+
+<ul id="suggestions"></ul>
+
+</div>
+
+
+<hr>
+
+
+<p class="info">
+
+<strong>Important:</strong>
+This tool provides a basic keyword and resume-section analysis.
+It does not guarantee ATS approval, an interview, or employment.
+Only add keywords that genuinely match your skills and experience.
+
+</p>
+
+</div>
+
+</div>
+
+
+<footer>
+
+© 2026 KaamKaro AI — Apna kaam batao, ready result pao.
+
+</footer>
+
+
+<script>
+
+
+/* =========================
+   FILE UPLOAD
+========================= */
+
+const resumeFile =
+    document.getElementById("resumeFile");
+
+
+resumeFile.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(!file){
+        return;
+    }
+
+    document.getElementById("fileName").textContent =
+        "Selected: " + file.name;
+
+
+    const preview =
+        document.getElementById("preview");
+
+    preview.innerHTML = "";
+
+
+    if(file.type.startsWith("image/")){
+
+        const img =
+            document.createElement("img");
+
+        img.src =
+            URL.createObjectURL(file);
+
+        preview.appendChild(img);
+
+    }
+
+    else if(file.type === "application/pdf"){
+
+        preview.innerHTML =
+
+            "<p class='info'>📑 PDF selected. " +
+            "Paste the resume text below for keyword analysis.</p>";
+
+    }
+
+});
+
+
+/* =========================
+   TEXT CLEANING
+========================= */
+
+function cleanText(text){
+
+    return text
+        .toLowerCase()
+        .replace(/[^\w\s+#.-]/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+/* =========================
+   STOP WORDS
+========================= */
+
+const stopWords = new Set([
+
+    "the",
+    "and",
+    "for",
+    "with",
+    "from",
+    "that",
+    "this",
+    "have",
+    "has",
+    "had",
+    "will",
+    "your",
+    "you",
+    "our",
+    "are",
+    "was",
+    "were",
+    "been",
+    "being",
+    "into",
+    "about",
+    "after",
+    "before",
+    "under",
+    "over",
+    "than",
+    "then",
+    "they",
+    "them",
+    "their",
+    "there",
+    "here",
+    "also",
+    "very",
+    "more",
+    "most",
+    "some",
+    "such",
+    "only",
+    "other",
+    "each",
+    "both",
+    "must",
+    "should",
+    "would",
+    "could",
+    "can",
+    "may",
+    "might",
+    "work",
+    "working",
+    "worked",
+    "role",
+    "job",
+    "position",
+    "candidate",
+    "company",
+    "team",
+    "looking",
+    "required",
+    "requirements",
+    "responsibilities",
+    "experience",
+    "years",
+    "year",
+    "using",
+    "used",
+    "within",
+    "across",
+    "through",
+    "provide",
+    "providing",
+    "including",
+    "related",
+    "based",
+    "able",
+    "ability",
+    "etc",
+    "please",
+    "good",
+    "great",
+    "strong",
+    "new",
+    "like",
+    "well",
+    "need",
+    "needs",
+    "want",
+    "wanted"
+
+]);
+
+
+/* =========================
+   COMMON GENERIC WORDS
+========================= */
+
+const genericWords = new Set([
+
+    "skills",
+    "skill",
+    "knowledge",
+    "person",
+    "people",
+    "professional",
+    "professionals",
+    "business",
+    "organization",
+    "organizations",
+    "position",
+    "candidate",
+    "opportunity",
+    "environment",
+    "responsible",
+    "responsibility",
+    "duties",
+    "details",
+    "information"
+
+]);
+
+
+/* =========================
+   IMPORTANT PHRASES
+========================= */
+
+const importantPhrases = [
+
+    "project management",
+    "customer service",
+    "customer support",
+    "data entry",
+    "data analysis",
+    "digital marketing",
+    "social media marketing",
+    "content creation",
+    "content marketing",
+    "search engine optimization",
+    "search engine marketing",
+    "microsoft office",
+    "google sheets",
+    "google docs",
+    "google workspace",
+    "business development",
+    "sales management",
+    "account management",
+    "time management",
+    "team management",
+    "email marketing",
+    "market research",
+    "financial analysis",
+    "inventory management",
+    "supply chain",
+    "problem solving",
+    "communication skills",
+    "lead generation",
+    "relationship management",
+    "quality assurance",
+    "software development",
+    "web development",
+    "front end",
+    "back end",
+    "full stack",
+    "user experience",
+    "user interface"
+
+];
+
+
+/* =========================
+   EXTRACT KEYWORDS
+========================= */
+
+function extractKeywords(jobText){
+
+    const text =
+        cleanText(jobText);
+
+
+    let words =
+        text.split(/\s+/);
+
+
+    let keywords = [];
+
+
+    /* Single meaningful words */
+
+    words.forEach(word => {
+
+        word =
+            word.replace(/^[^a-z0-9+#.-]+|[^a-z0-9+#.-]+$/gi,"");
+
+
+        if(
+            word.length >= 4 &&
+            !stopWords.has(word) &&
+            !genericWords.has(word) &&
+            !/^\d+$/.test(word)
+        ){
+
+            keywords.push(word);
+
+        }
+
+    });
+
+
+    /* Important phrases */
+
+    importantPhrases.forEach(phrase => {
+
+        if(text.includes(phrase)){
+
+            keywords.push(phrase);
+
+        }
+
+    });
+
+
+    return [...new Set(keywords)];
+
+}
+
+
+/* =========================
+   CHECK RESUME
+========================= */
+
+function checkResume(){
+
+    const resume =
+        cleanText(
+            document.getElementById("resumeText").value
+        );
+
+
+    const job =
+        cleanText(
+            document.getElementById("jobDescription").value
+        );
+
+
+    if(!resume){
+
+        alert(
+            "Please paste your resume text first."
+        );
+
+        return;
+
+    }
+
+
+    if(!job){
+
+        alert(
+            "Please paste the job description first."
+        );
+
+        return;
+
+    }
+
+
+    const keywords =
+        extractKeywords(job);
+
+
+    if(keywords.length === 0){
+
+        alert(
+            "Not enough meaningful keywords were found in the job description."
+        );
+
+        return;
+
+    }
+
+
+    let matched = [];
+    let missing = [];
+
+
+    keywords.forEach(keyword => {
+
+        if(resume.includes(keyword)){
+
+            matched.push(keyword);
+
+        }
+
+        else{
+
+            missing.push(keyword);
+
+        }
+
+    });
+
+
+    /* =========================
+       SCORE
+    ========================= */
+
+    let score =
+        Math.round(
+            (matched.length / keywords.length) * 100
+        );
+
+
+    score =
+        Math.min(100,Math.max(0,score));
+
+
+    document.getElementById("score").textContent =
+        score + "%";
+
+
+    let scoreText = "";
+
+
+    if(score >= 75){
+
+        scoreText =
+            "<span class='badge success'>" +
+            "Strong keyword coverage" +
+            "</span>";
+
+    }
+
+    else if(score >= 50){
+
+        scoreText =
+            "<span class='badge warning'>" +
+            "Moderate keyword coverage" +
+            "</span>";
+
+    }
+
+    else{
+
+        scoreText =
+            "<span class='badge missing'>" +
+            "Several relevant keywords may be missing" +
+            "</span>";
+
+    }
+
+
+    document.getElementById("scoreText").innerHTML =
+        scoreText;
+
+
+    /* =========================
+       RESUME SECTIONS
+    ========================= */
+
+    const sectionList = {
+
+        "Contact Information":
+            /email|phone|mobile|contact/,
+
+        "Education":
+            /education|degree|bachelor|master|12th|10th|school|college/,
+
+        "Experience":
+            /experience|work history|employment|internship/,
+
+        "Skills":
+            /skills|technical skills|soft skills/,
+
+        "Projects":
+            /projects|project/,
+
+        "Certifications":
+            /certification|certifications|certificate|course/,
+
+        "Objective / Summary":
+            /objective|career objective|summary|profile/
+
+    };
+
+
+    let sectionHTML = "";
+
+    let missingSections = [];
+
+
+    for(
+        const section in sectionList
+    ){
+
+        if(
+            sectionList[section].test(resume)
+        ){
+
+            sectionHTML +=
+                `<span class="badge success">
+                    ✓ ${section}
+                </span>`;
+
+        }
+
+        else{
+
+            sectionHTML +=
+                `<span class="badge missing">
+                    ✗ ${section}
+                </span>`;
+
+            missingSections.push(section);
+
+        }
+
+    }
+
+
+    document.getElementById("sections").innerHTML =
+        sectionHTML;
+
+
+    /* =========================
+       MATCHED KEYWORDS
+    ========================= */
+
+    if(matched.length){
+
+        document.getElementById("matched").innerHTML =
+
+            matched
+                .sort()
+                .map(keyword =>
+
+                    `<span class="badge success">
+                        ${keyword}
+                    </span>`
+
+                )
+                .join("");
+
+    }
+
+    else{
+
+        document.getElementById("matched").innerHTML =
+            "<p class='info'>No important keyword matches found.</p>";
+
+    }
+
+
+    /* =========================
+       MISSING KEYWORDS
+    ========================= */
+
+    if(missing.length){
+
+        document.getElementById("missing").innerHTML =
+
+            missing
+                .sort()
+                .map(keyword =>
+
+                    `<span class="badge missing">
+                        ${keyword}
+                    </span>`
+
+                )
+                .join("");
+
+    }
+
+    else{
+
+        document.getElementById("missing").innerHTML =
+
+            "<p class='info'>✓ No important missing keywords detected.</p>";
+
+    }
+
+
+    /* =========================
+       SUGGESTIONS
+    ========================= */
+
+    let suggestions = [];
+
+
+    if(
+        !sectionList["Contact Information"].test(resume)
+    ){
+
+        suggestions.push(
+            "Add clear contact information such as your phone number and professional email."
+        );
+
+    }
+
+
+    if(
+        !sectionList["Education"].test(resume)
+    ){
+
+        suggestions.push(
+            "Add an Education section with your qualification, institution and year if appropriate."
+        );
+
+    }
+
+
+    if(
+        !sectionList["Experience"].test(resume)
+    ){
+
+        suggestions.push(
+            "Add relevant work experience, internship, freelance work or practical experience if applicable."
+        );
+
+    }
+
+
+    if(
+        !sectionList["Skills"].test(resume)
+    ){
+
+        suggestions.push(
+            "Add a dedicated Skills section with skills relevant to the target job."
+        );
+
+    }
+
+
+    if(
+        !sectionList["Projects"].test(resume)
+    ){
+
+        suggestions.push(
+            "Consider adding relevant projects and briefly describe what you did."
+        );
+
+    }
+
+
+    if(
+        !sectionList["Certifications"].test(resume)
+    ){
+
+        suggestions.push(
+            "Add relevant certifications, courses or training if you have them."
+        );
+
+    }
+
+
+    if(missing.length > 0){
+
+        suggestions.push(
+            "Review the missing keywords and add only those that genuinely match your skills or experience."
+        );
+
+    }
+
+
+    if(
+        resume.length < 300
+    ){
+
+        suggestions.push(
+            "Your resume text appears quite short. Consider adding relevant achievements, projects, skills and experience."
+        );
+
+    }
+
+
+    if(
+        !suggestions.length
+    ){
+
+        suggestions.push(
+            "Your resume contains the main sections detected by this checker. Tailor your wording to the specific job description."
+        );
+
+    }
+
+
+    document.getElementById("suggestions").innerHTML =
+
+        suggestions
+            .map(item =>
+                `<li>${item}</li>`
+            )
+            .join("");
+
+
+    /* =========================
+       SHOW RESULT
+    ========================= */
+
+    const result =
+        document.getElementById("result");
+
+
+    result.style.display =
+        "block";
+
+
+    result.scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+</script>
+
+</body>
+</html>
